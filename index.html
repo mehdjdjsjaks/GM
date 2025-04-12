@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Axcel - Login</title>
-    <meta charset="UTF-8" />
-    <script defer src="script.js"></script>
-    <style>
-      body { background: black; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
-      input { margin: 10px; padding: 10px; border-radius: 5px; border: none; }
-      button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background: #00ffcc; color: black; }
-    </style>
-  </head>
-  <body>
-    <h1>Axcel Login</h1>
-    <input type="email" id="email" placeholder="ایمیل" />
-    <input type="password" id="password" placeholder="رمز عبور" />
-    <button onclick="signUp()">ثبت‌نام</button>
-    <button onclick="login()">ورود</button>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Axcel Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>ورود یا ثبت‌نام</h2>
+  <input type="email" id="email" placeholder="ایمیل" />
+  <input type="password" id="password" placeholder="رمز عبور" />
+  <button onclick="signup()">ثبت‌نام</button>
+  <button onclick="login()">ورود</button>
+  <p id="message"></p>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
-  </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUFJeLyvFxW2iQ143snxn0d_9-36zzb1Q",
+      authDomain: "axcel-20956.firebaseapp.com",
+      projectId: "axcel-20956",
+      storageBucket: "axcel-20956.appspot.com",
+      messagingSenderId: "115833840953",
+      appId: "1:115833840953:web:03194ff9d298b5d2bf74e8",
+      measurementId: "G-2NSQVB63JG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    const messageEl = document.getElementById("message");
+
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          messageEl.textContent = "ثبت‌نام موفق بود!";
+          window.location.href = "chat.html";
+        })
+        .catch((error) => {
+          messageEl.textContent = "خطا: " + error.message;
+        });
+    }
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          messageEl.textContent = "ورود موفق بود!";
+          window.location.href = "chat.html";
+        })
+        .catch((error) => {
+          messageEl.textContent = "خطا: " + error.message;
+        });
+    }
+  </script>
+</body>
 </html>
