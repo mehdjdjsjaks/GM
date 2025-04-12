@@ -1,0 +1,74 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Axcel Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Axcel Chat</h2>
+  <div id="chat-box" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+
+  <input type="text" id="message-input" placeholder="پیام خود را بنویسید..." />
+  <button onclick="sendMessage()">ارسال</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUFJeLyvFxW2iQ143snxn0d_9-36zzb1Q",
+      authDomain: "axcel-20956.firebaseapp.com",
+      projectId: "axcel-20956",
+      storageBucket: "axcel-20956.appspot.com",
+      messagingSenderId: "115833840953",
+      appId: "1:115833840953:web:03194ff9d298b5d2bf74e8",
+      measurementId: "G-2NSQVB63JG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    let userEmail = "";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        userEmail = user.email;
+        const q = query(collection(db, "messages"), where("email", "==", userEmail));
+
+        onSnapshot(q, (snapshot) => {
+          const chatBox = document.getElementById("chat-box");
+          chatBox.innerHTML = "";
+          snapshot.forEach((doc) => {
+            const msg = doc.data();
+            const div = document.createElement("div");
+            div.textContent = msg.text;
+            chatBox.appendChild(div);
+          });
+        });
+
+      } else {
+        window.location.href = "index.html"; // اگه لاگین نبود، برش گردون به صفحه اصلی
+      }
+    });
+
+    async function sendMessage() {
+      const input = document.getElementById("message-input");
+      const text = input.value.trim();
+      if (text === "") return;
+
+      await addDoc(collection(db, "messages"), {
+        text,
+        email: userEmail,
+        timestamp: Date.now()
+      });
+
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
