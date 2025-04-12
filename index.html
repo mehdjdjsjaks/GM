@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Axcel AI - Login</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>Axcel AI</h1>
+  <head>
+    <title>Axcel - Login</title>
+    <meta charset="UTF-8" />
+    <script defer src="script.js"></script>
+    <style>
+      body { background: black; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+      input { margin: 10px; padding: 10px; border-radius: 5px; border: none; }
+      button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background: #00ffcc; color: black; }
+    </style>
+  </head>
+  <body>
+    <h1>Axcel Login</h1>
+    <input type="email" id="email" placeholder="ایمیل" />
+    <input type="password" id="password" placeholder="رمز عبور" />
+    <button onclick="signUp()">ثبت‌نام</button>
+    <button onclick="login()">ورود</button>
 
-    <div id="auth-container">
-      <input type="email" id="email" placeholder="ایمیل">
-      <input type="password" id="password" placeholder="رمز عبور">
-      <button onclick="register()">ثبت‌نام</button>
-      <button onclick="login()">ورود</button>
-    </div>
-
-    <div id="chat-container" style="display:none;">
-      <h2>چت شما</h2>
-      <div id="messages"></div>
-      <input type="text" id="messageInput" placeholder="پیامت رو بنویس...">
-      <button onclick="sendMessage()">ارسال</button>
-      <button onclick="logout()">خروج</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+  </body>
 </html>
