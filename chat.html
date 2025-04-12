@@ -10,17 +10,9 @@
   <h1>چت با Axcel</h1>
   <div id="chat-box" style="max-width: 500px; margin: auto; text-align: left;"></div>
   <input type="text" id="message" placeholder="پیامت رو بنویس..." style="width: 60%;">
-  <button onclick="sendMessage()">ارسال</button>
+  <button id="sendBtn">ارسال</button>
 
-  <script>
-    let chatBox = document.getElementById(\"chat-box\");
-
-    function sendMessage() {
-      const msg = document.getElementById(\"message\").value;
-      if (!msg) return;
-      chatBox.innerHTML += `<p><b>شما:</b> ${msg}</p>`;
-      document.getElementById(\"message\").value = \"\";
-    }
-  </script>
+  <!-- اتصال به chat.js -->
+  <script type="module" src="chat.js"></script>
 </body>
 </html>
